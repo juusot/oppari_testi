@@ -1,0 +1,25 @@
+.searchField, .countrySelector, .searchButton, .populationInput {
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.searchField, .countrySelector {
+  width: 200px;
+}
+
+.textFilter {
+  display: block;
+}
+
+.countryFilter, .populationFilter {
+  display: inline-block;
+  width: 30%;
+}
+
+.populationInput {
+  width: 80px;
+}
+
+.population.min {
+  margin-right: 10px;
+}
