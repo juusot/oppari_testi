@@ -19,6 +19,7 @@ export default class App extends React.Component {
   }
 
   updateFilterData(data) {
+    console.log(data);
     this.setState({ filterData: data });
   }
 

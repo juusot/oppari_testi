@@ -2,16 +2,18 @@ import React from 'react';
 import './Search.css';
 import PropTypes from 'prop-types';
 
+export const defaultState = {
+  populationMin: '',
+  populationMax: '',
+  selectedCountry: '',
+  searchTerm: '',
+};
+
 export default class Search extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      populationMin: '',
-      populationMax: '',
-      selectedCountry: '',
-      searchTerm: '',
-    };
+    this.state = defaultState;
   }
 
   handleOnChange(key) {
@@ -33,6 +35,7 @@ export default class Search extends React.Component {
         <div className='textFilter'>
           <input
             className='searchField'
+            data-testid='searchField'
             placeholder='Hakutermi'
             type='text'
             onChange={this.handleOnChange('searchTerm')}
@@ -49,7 +52,7 @@ export default class Search extends React.Component {
           <h4>Maat</h4>
           <select
             className='countrySelector'
-            onChange={this.handleOnChange('country')}
+            onChange={this.handleOnChange('selectedCountry')}
             defaultValue={selectedCountry}
           >
             <option key='default' value=''></option>
@@ -66,6 +69,7 @@ export default class Search extends React.Component {
           <h4>Väkiluku</h4>
           <input
             className='populationInput min'
+            data-testid='populationMin'
             placeholder='Vähintään'
             type='text'
             onChange={this.handleOnChange('populationMin')}
@@ -73,7 +77,8 @@ export default class Search extends React.Component {
           />
           <input
             className='populationInput max'
-            placeholder='Korkeintaan'
+            data-testid='populationMax'
+            placeholder='Enintään'
             type='text'
             onChange={this.handleOnChange('populationMax')}
             value={populationMax}

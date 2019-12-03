@@ -9,7 +9,7 @@ const props = {
   population: 652267,
 };
 
-describe('Kaupunki elementti', () => {
+describe('City-komponentti', () => {
   test('tuo kaupungin nimen näkyviin', async () => {
     const { getByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
@@ -26,7 +26,7 @@ describe('Kaupunki elementti', () => {
     const { getByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
-    const population = getByText('Asukasluku', { exact: false });
+    const population = getByText(Number(props.population).toLocaleString('fi-FI'), { exact: false });
     expect(population).toBeInTheDocument();
   });
 
