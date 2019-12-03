@@ -9,7 +9,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cities: this.getData(),
+      cities: this.getData().sort((a, b) => (a.city > b.city) ? 1 : -1),
       filterData: null,
     };
   }
@@ -51,8 +51,8 @@ export default class App extends React.Component {
           cities={cities}
           onSearch={this.updateFilterData.bind(this)}
         />
-        {filteredCities.map(data =>
-          <City key={data.city} {...data} />
+        {filteredCities.map(props =>
+          <City key={props.city} {...props} />
         )}
       </React.Fragment>
     );

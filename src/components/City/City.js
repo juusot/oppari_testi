@@ -23,7 +23,7 @@ export default class City extends React.Component {
         <div className='cityTitle'>{`${city}, ${country} `}</div>
         {this.state.open &&
           <div className='population'>
-            {population.toLocaleString('fi-FI')}
+            Asukasluku: {population.toLocaleString('fi-FI')}
           </div>
         }
       </div>

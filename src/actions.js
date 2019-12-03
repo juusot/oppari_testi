@@ -1,19 +1,19 @@
 export function dataFetch() {
   return [
     {
-      city: 'Helsinki',
-      country: 'Suomi',
-      population: 652267,
+      city: 'Linköping',
+      country: 'Ruotsi',
+      population: 104232,
     },
     {
-      city: 'Stockholm',
+      city: 'Jönköping',
       country: 'Ruotsi',
-      population: 923516,
+      population: 89396,
     },
     {
-      city: 'Uumaja',
-      country: 'Ruotsi',
-      population: 84761,
+      city: 'Globe',
+      country: 'Yhdysvallat',
+      population: 7536,
     },
     {
       city: 'Dallas',
@@ -26,14 +26,9 @@ export function dataFetch() {
       population: 186440,
     },
     {
-      city: 'Johannesburg',
-      country: 'South Africa',
-      population: 5635127,
-    },
-    {
-      city: 'Durban',
-      country: 'South Africa',
-      population: 595061,
+      city: 'Tokio',
+      country: 'Japani',
+      population: 13230000,
     },
   ];
 }
