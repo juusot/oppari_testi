@@ -20,7 +20,7 @@ export default class City extends React.Component {
     const className = `city ${this.state.open ? 'open' : ''}`.trim();
     return (
       <div className={className} onClick={() => this.toggle()}>
-        <div className='cityTitle'>{`${city}, ${country} `}</div>
+        <div className='title'>{`${city}, ${country} `}</div>
         {this.state.open &&
           <div className='population'>
             Asukasluku: {population.toLocaleString('fi-FI')}

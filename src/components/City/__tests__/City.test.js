@@ -10,19 +10,19 @@ const props = {
 };
 
 describe('City-komponentti', () => {
-  test('tuo kaupungin nimen näkyviin', async () => {
+  test('tuo kaupungin nimen näkyviin', () => {
     const { getByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     expect(city).toBeInTheDocument();
   });
 
-  test('tuo valtion nimen näkyviin', async () => {
+  test('tuo valtion nimen näkyviin', () => {
     const { getByText } = render(<City {...props} />);
     const country = getByText(props.country, { exact: false });
     expect(country).toBeInTheDocument();
   });
 
-  test('klikatessa tuo asukasluvun näkyviin', async () => {
+  test('klikatessa tuo asukasluvun näkyviin', () => {
     const { getByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
@@ -30,7 +30,7 @@ describe('City-komponentti', () => {
     expect(population).toBeInTheDocument();
   });
 
-  test('kahdesti klikatessa tuo asukasluvun näkyviin ja piilottaa asukasluvun', async () => {
+  test('kahdesti klikatessa tuo asukasluvun näkyviin ja piilottaa asukasluvun', () => {
     const { getByText, queryByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
@@ -42,7 +42,7 @@ describe('City-komponentti', () => {
     expect(populationHidden).toBeNull();
   });
 
-  test('kolmesti klikatessa tuo asukasluvun näkyviin, piilottaa asukasluvun ja tuo asukasluvun uudestaan näkyviin', async () => {
+  test('kolmesti klikatessa tuo asukasluvun näkyviin, piilottaa asukasluvun ja tuo asukasluvun uudestaan näkyviin', () => {
     const { getByText, queryByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     // Näkyviin

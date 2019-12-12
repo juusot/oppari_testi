@@ -9,13 +9,13 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cities: this.getData().sort((a, b) => (a.city > b.city) ? 1 : -1),
+      cities: this.getData(),
       filterData: null,
     };
   }
 
   getData() {
-    return dataFetch();
+    return dataFetch().sort((a, b) => (a.city > b.city) ? 1 : -1);
   }
 
   updateFilterData(data) {
@@ -29,7 +29,7 @@ export default class App extends React.Component {
     const sanitizeNumber = text => Number(String(text).replace(/[^0-9]+/g, ''));
     const filteredCities = filterData
       ? cities
-        .filter(({ country }) => filterData.country ? filterData.country === country : true)
+        .filter(({ country }) => filterData.selectedCountry ? filterData.selectedCountry === country : true)
         .filter(({ country, city }) =>
           filterData.searchTerm
             ? sanitizeWord(`${city}${country}`).includes(sanitizeWord(filterData.searchTerm))
