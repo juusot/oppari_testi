@@ -1,9 +1,9 @@
-.searchField, .countrySelector, .searchButton, .populationInput {
+.searchTerm, .countrySelector, .searchButton, .populationInput {
   padding: 5px;
   margin: 5px 0;
 }
 
-.searchField, .countrySelector {
+.searchTerm, .countrySelector {
   width: 200px;
 }
 

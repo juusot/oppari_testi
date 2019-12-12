@@ -29,15 +29,15 @@ describe('Search-komponentti', () => {
   });
 
   test.each([
-    ['hakutermillä', 'searchField', 'searchTerm', 'test'],
-    ['vähimmäisväkiluvulla', 'populationMin', 'populationMin', Number(1000).toLocaleString('fi-FI')],
-    ['enimmäisväkiluvulla', 'populationMax', 'populationMax', Number(1000).toLocaleString('fi-FI')],
-  ])('hakee annetulla %s', (label, fieldId, key, input) => {
+    ['hakutermillä', 'searchTerm', 'test'],
+    ['vähimmäisväkiluvulla', 'populationMin', Number(1000).toLocaleString('fi-FI')],
+    ['enimmäisväkiluvulla', 'populationMax', Number(1000).toLocaleString('fi-FI')],
+  ])('hakee annetulla %s', (label, key, input) => {
     const { getByRole, getByTestId } = render(
       <Search cities={cities} onSearch={onSearch} />
     );
 
-    const inputField = getByTestId(fieldId);
+    const inputField = getByTestId(key);
     const searchButton = getByRole('button');
 
     fireEvent.change(inputField, { target: { value: input } });

@@ -34,8 +34,8 @@ export default class Search extends React.Component {
       <div className='search'>
         <div className='textFilter'>
           <input
-            className='searchField'
-            data-testid='searchField'
+            className='searchTerm'
+            data-testid='searchTerm'
             placeholder='Hakutermi'
             type='text'
             onChange={this.handleOnChange('searchTerm')}
