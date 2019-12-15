@@ -49,7 +49,7 @@ export default class App extends React.Component {
       <React.Fragment>
         <h1>Kaupunkihaku</h1>
         <Search
-          cities={cities}
+          countries={[...(new Set(cities.map(({ country }) => country)))].sort()}
           onSearch={this.updateFilterData.bind(this)}
         />
         {filteredCities.map(props =>

@@ -28,7 +28,6 @@ export default class Search extends React.Component {
 
   render() {
     const { searchTerm, selectedCountry, populationMin, populationMax } = this.state;
-    const uniqueCountries = [...(new Set(this.props.cities.map(({ country }) => country)))].sort();
 
     return (
       <div className='search'>
@@ -56,7 +55,7 @@ export default class Search extends React.Component {
             defaultValue={selectedCountry}
           >
             <option key='default' value=''></option>
-            {uniqueCountries.map(country =>
+            {this.props.countries.map(country =>
               <option
                 key={country}
                 value={country}>
@@ -90,6 +89,6 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-  cities: PropTypes.array,
+  countries: PropTypes.array,
   onSearch: PropTypes.func,
 };

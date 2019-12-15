@@ -3,29 +3,21 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Search, { defaultState as defaultSearchResult } from '../Search';
 
-const cities = [
-  {
-    city: 'Helsinki',
-    country: 'Suomi',
-    population: 652267,
-  },
-  {
-    city: 'Tukholma',
-    country: 'Ruotsi',
-    population: 923516,
-  }
-];
-
+const countries = ['Suomi', 'Ruotsi'];
 const onSearch = jest.fn();
+const props = { countries, onSearch };
 
 describe('Search-komponentti', () => {
   test('tulee näkyviin', () => {
-    const { getByRole } = render(
-      <Search cities={cities} onSearch={onSearch} />
+    const { getByRole, getByTestId } = render(
+      <Search {...props} />
     );
 
     expect(getByRole('button')).toHaveClass('searchButton');
     expect(getByRole('listbox')).toHaveClass('countrySelector');
+    expect(getByTestId('searchTerm')).toBeInTheDocument();
+    expect(getByTestId('populationMin')).toBeInTheDocument();
+    expect(getByTestId('populationMax')).toBeInTheDocument();
   });
 
   test.each([
@@ -34,7 +26,7 @@ describe('Search-komponentti', () => {
     ['enimmäisväkiluvulla', 'populationMax', Number(1000).toLocaleString('fi-FI')],
   ])('hakee annetulla %s', (label, key, input) => {
     const { getByRole, getByTestId } = render(
-      <Search cities={cities} onSearch={onSearch} />
+      <Search {...props} />
     );
 
     const inputField = getByTestId(key);
@@ -53,10 +45,10 @@ describe('Search-komponentti', () => {
 
   test('hakee valitulla maalla', () => {
     const { getByRole } = render(
-      <Search cities={cities} onSearch={onSearch} />
+      <Search {...props} />
     );
 
-    const selectedCountry = cities[0].country;
+    const selectedCountry = countries[0];
     fireEvent.change(getByRole('listbox'), { target: { value: selectedCountry } });
     const searchButton = getByRole('button');
     fireEvent.click(searchButton);
@@ -71,12 +63,12 @@ describe('Search-komponentti', () => {
 
   test('hakee kaikilla annetuilla arvoilla', () => {
     const { getByRole, getByTestId } = render(
-      <Search cities={cities} onSearch={onSearch} />
+      <Search {...props} />
     );
 
-    const selectedCountry = cities[0].country;
+    const selectedCountry = countries[1];
     const searchButton = getByRole('button');
-    const searchTerm = getByTestId('searchField');
+    const searchTerm = getByTestId('searchTerm');
     const populationMin = getByTestId('populationMin');
     const populationMax = getByTestId('populationMax');
     const textValue = 'test';
