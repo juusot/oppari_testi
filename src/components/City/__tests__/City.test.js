@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import City from '../City';
+import City, { formatPopulation } from '../City';
 
 const props = {
   city: 'Helsinki',
@@ -26,7 +26,7 @@ describe('City-komponentti', () => {
     const { getByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
-    const population = getByText(Number(props.population).toLocaleString('fi-FI'), { exact: false });
+    const population = getByText(formatPopulation(props.population), { exact: false });
     expect(population).toBeInTheDocument();
   });
 
@@ -34,11 +34,11 @@ describe('City-komponentti', () => {
     const { getByText, queryByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
-    const population = getByText('Asukasluku', { exact: false });
+    const population = getByText(formatPopulation(props.population), { exact: false });
     expect(population).toBeInTheDocument();
 
     fireEvent.click(city);
-    const populationHidden = queryByText('Asukasluku', { exact: false });
+    const populationHidden = queryByText(formatPopulation(props.population), { exact: false });
     expect(populationHidden).toBeNull();
   });
 
@@ -47,19 +47,18 @@ describe('City-komponentti', () => {
     const city = getByText(props.city, { exact: false });
     // Näkyviin
     fireEvent.click(city);
-    const population = getByText('Asukasluku', { exact: false });
+    const population = getByText(formatPopulation(props.population), { exact: false });
     expect(population).toBeInTheDocument();
 
     // Piiloon
     fireEvent.click(city);
-    const populationHidden = queryByText('Asukasluku', { exact: false });
+    const populationHidden = queryByText(formatPopulation(props.population), { exact: false });
     expect(populationHidden).toBeNull();
 
     // Näkyviin
     fireEvent.click(city);
-    const populationVisible = getByText('Asukasluku', { exact: false });
+    const populationVisible = getByText(formatPopulation(props.population), { exact: false });
     expect(populationVisible).toBeInTheDocument();
     expect(population).toStrictEqual(populationVisible);
   });
-
 });
