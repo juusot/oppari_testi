@@ -16,7 +16,7 @@ describe('City-komponentti', () => {
     expect(city).toBeInTheDocument();
   });
 
-  test('tuo valtion nimen näkyviin', () => {
+  test('tuo maan nimen näkyviin', () => {
     const { getByText } = render(<City {...props} />);
     const country = getByText(props.country, { exact: false });
     expect(country).toBeInTheDocument();

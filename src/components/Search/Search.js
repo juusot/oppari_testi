@@ -9,6 +9,8 @@ export const defaultState = {
   searchTerm: '',
 };
 
+export const formatPopulation = population => Number(population).toLocaleString('fi-FI');
+
 export default class Search extends React.Component {
 
   constructor() {
@@ -19,7 +21,7 @@ export default class Search extends React.Component {
   handleOnChange(key) {
     return event => {
       const value = ['populationMin', 'populationMax'].includes(key) && event.target.value
-        ? Number(event.target.value.replace(/[^0-9]+/g, '')).toLocaleString('fi-FI')
+        ? formatPopulation(event.target.value.replace(/[^0-9]+/g, ''))
         : event.target.value;
 
       this.setState({ [key]: value });

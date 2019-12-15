@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Search, { defaultState as defaultSearchResult } from '../Search';
+import Search, { defaultState as defaultSearchResult, formatPopulation } from '../Search';
 
 const countries = ['Suomi', 'Ruotsi'];
 const onSearch = jest.fn();
@@ -22,8 +22,8 @@ describe('Search-komponentti', () => {
 
   test.each([
     ['hakutermillä', 'searchTerm', 'test'],
-    ['vähimmäisväkiluvulla', 'populationMin', Number(1000).toLocaleString('fi-FI')],
-    ['enimmäisväkiluvulla', 'populationMax', Number(1000).toLocaleString('fi-FI')],
+    ['vähimmäisväkiluvulla', 'populationMin', formatPopulation(1000)],
+    ['enimmäisväkiluvulla', 'populationMax', formatPopulation(1000)],
   ])('hakee annetulla %s', (label, key, input) => {
     const { getByRole, getByTestId } = render(
       <Search {...props} />
@@ -72,7 +72,7 @@ describe('Search-komponentti', () => {
     const populationMin = getByTestId('populationMin');
     const populationMax = getByTestId('populationMax');
     const textValue = 'test';
-    const numericValue = Number(1000).toLocaleString('fi-FI');
+    const numericValue = formatPopulation(1000);
 
     fireEvent.change(searchTerm, { target: { value: textValue } });
     fireEvent.change(populationMin, { target: { value: numericValue } });
