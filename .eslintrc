@@ -1,50 +1,46 @@
 {
   "env": {
-    "jest/globals": true,
     "browser": true,
     "node": true,
-    "es6": true
+    "es2020": true,
+    "jest": true
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:jest/recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["jest", "import", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
+    "ecmaVersion": 2020,
+    "ecmaFeatures": { "legacyDecorators": true }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
     }
   },
   "rules": {
-    "react/jsx-indent": [
-      2,
-      2
-    ],
-    "indent": [
+    "prettier/prettier": [
       "error",
-      2
-    ],
-    "semi": "error",
-    "quotes": [
-      2,
-      "single"
-    ],
-    "no-multiple-empty-lines": [
-      1,
       {
-        "max": 1,
-        "maxEOF": 0,
-        "maxBOF": 0
+        "printWidth": 120,
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "proseWrap": "always",
+        "arrowParens": "avoid",
+        "bracketSpacing": true
       }
-    ]
-  },
-  "plugins": [
-    "react",
-    "jest"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:jest/recommended",
-    "plugin:jest/style"
-  ]
+    ],
+    "camelcase": "warn",
+    "import/no-unresolved": "off",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
+  }
 }

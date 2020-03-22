@@ -13,9 +13,7 @@ beforeEach(() => {
 
 describe('Search-komponentti', () => {
   test('tulee näkyviin', () => {
-    const { getByPlaceholderText, getByText } = render(
-      <Search {...props} />
-    );
+    const { getByPlaceholderText, getByText } = render(<Search {...props} />);
 
     expect(getByText('Hae')).toBeInTheDocument();
     expect(getByText('Valitse maa')).toBeInTheDocument();
@@ -29,9 +27,7 @@ describe('Search-komponentti', () => {
     ['vähimmäisväkiluvulla', 'populationMin', 'Vähintään', formatPopulation(1000)],
     ['enimmäisväkiluvulla', 'populationMax', 'Enintään', formatPopulation(1000)],
   ])('hakee annetulla %s', (label, key, placeholder, input) => {
-    const { getByPlaceholderText, getByText } = render(
-      <Search {...props} />
-    );
+    const { getByPlaceholderText, getByText } = render(<Search {...props} />);
 
     const inputField = getByPlaceholderText(placeholder);
     const searchButton = getByText('Hae');
@@ -41,16 +37,14 @@ describe('Search-komponentti', () => {
 
     const searchResult = {
       ...defaultSearchResult,
-      [key]: input
+      [key]: input,
     };
 
     expect(onSearch).toHaveBeenCalledWith(searchResult);
   });
 
   test('hakee valitulla maalla', () => {
-    const { getByTestId, getByText } = render(
-      <Search {...props} />
-    );
+    const { getByTestId, getByText } = render(<Search {...props} />);
 
     const selectedCountry = countries[0];
     fireEvent.change(getByTestId('countrySelector'), { target: { value: selectedCountry } });
@@ -59,16 +53,14 @@ describe('Search-komponentti', () => {
 
     const searchResult = {
       ...defaultSearchResult,
-      selectedCountry
+      selectedCountry,
     };
 
     expect(onSearch).toHaveBeenCalledWith(searchResult);
   });
 
-  test('hakee kaikilla annetuilla arvoilla', () => {
-    const { getByTestId, getByText, getByPlaceholderText } = render(
-      <Search {...props} />
-    );
+  test('hakee kaikilla annetuilla yhtaikaa arvoilla', () => {
+    const { getByTestId, getByText, getByPlaceholderText } = render(<Search {...props} />);
 
     const selectedCountry = countries[1];
     const searchButton = getByText('Hae');
@@ -88,14 +80,9 @@ describe('Search-komponentti', () => {
       searchTerm: textValue,
       populationMin: numericValue,
       populationMax: numericValue,
-      selectedCountry
+      selectedCountry,
     };
 
     expect(onSearch).toHaveBeenCalledWith(searchResult);
   });
-
-  // Numeroiden käsittely?
-
-  // "Virheellinen valinta SELECTissä"
-
 });
