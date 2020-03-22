@@ -43,6 +43,7 @@ export default class Search extends React.Component {
             defaultValue={searchTerm}
           />
           <button
+            data-testid="searchButton"
             className='searchButton'
             type="button"
             onClick={() => this.props.onSearch(this.state)}>
@@ -52,11 +53,12 @@ export default class Search extends React.Component {
         <div className='countryFilter'>
           <h4>Maat</h4>
           <select
+            data-testid="countrySelector"
             className='countrySelector'
             onChange={this.handleOnChange('selectedCountry')}
             defaultValue={selectedCountry}
           >
-            <option key='default' value=''></option>
+            <option key='default' value=''>Valitse maa</option>
             {this.props.countries.map(country =>
               <option
                 key={country}

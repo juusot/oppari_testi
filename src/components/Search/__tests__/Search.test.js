@@ -7,30 +7,34 @@ const countries = ['Suomi', 'Ruotsi'];
 const onSearch = jest.fn();
 const props = { countries, onSearch };
 
+beforeEach(() => {
+  onSearch.mockClear();
+});
+
 describe('Search-komponentti', () => {
   test('tulee näkyviin', () => {
-    const { getByRole, getByTestId } = render(
+    const { getByPlaceholderText, getByText } = render(
       <Search {...props} />
     );
 
-    expect(getByRole('button')).toHaveClass('searchButton');
-    expect(getByRole('listbox')).toHaveClass('countrySelector');
-    expect(getByTestId('searchTerm')).toBeInTheDocument();
-    expect(getByTestId('populationMin')).toBeInTheDocument();
-    expect(getByTestId('populationMax')).toBeInTheDocument();
+    expect(getByText('Hae')).toBeInTheDocument();
+    expect(getByText('Valitse maa')).toBeInTheDocument();
+    expect(getByPlaceholderText('Hakutermi')).toBeInTheDocument();
+    expect(getByPlaceholderText('Vähintään')).toBeInTheDocument();
+    expect(getByPlaceholderText('Enintään')).toBeInTheDocument();
   });
 
   test.each([
-    ['hakutermillä', 'searchTerm', 'test'],
-    ['vähimmäisväkiluvulla', 'populationMin', formatPopulation(1000)],
-    ['enimmäisväkiluvulla', 'populationMax', formatPopulation(1000)],
-  ])('hakee annetulla %s', (label, key, input) => {
-    const { getByRole, getByTestId } = render(
+    ['hakutermillä', 'searchTerm', 'Hakutermi', 'test'],
+    ['vähimmäisväkiluvulla', 'populationMin', 'Vähintään', formatPopulation(1000)],
+    ['enimmäisväkiluvulla', 'populationMax', 'Enintään', formatPopulation(1000)],
+  ])('hakee annetulla %s', (label, key, placeholder, input) => {
+    const { getByPlaceholderText, getByText } = render(
       <Search {...props} />
     );
 
-    const inputField = getByTestId(key);
-    const searchButton = getByRole('button');
+    const inputField = getByPlaceholderText(placeholder);
+    const searchButton = getByText('Hae');
 
     fireEvent.change(inputField, { target: { value: input } });
     fireEvent.click(searchButton);
@@ -44,13 +48,13 @@ describe('Search-komponentti', () => {
   });
 
   test('hakee valitulla maalla', () => {
-    const { getByRole } = render(
+    const { getByTestId, getByText } = render(
       <Search {...props} />
     );
 
     const selectedCountry = countries[0];
-    fireEvent.change(getByRole('listbox'), { target: { value: selectedCountry } });
-    const searchButton = getByRole('button');
+    fireEvent.change(getByTestId('countrySelector'), { target: { value: selectedCountry } });
+    const searchButton = getByText('Hae');
     fireEvent.click(searchButton);
 
     const searchResult = {
@@ -62,22 +66,22 @@ describe('Search-komponentti', () => {
   });
 
   test('hakee kaikilla annetuilla arvoilla', () => {
-    const { getByRole, getByTestId } = render(
+    const { getByTestId, getByText, getByPlaceholderText } = render(
       <Search {...props} />
     );
 
     const selectedCountry = countries[1];
-    const searchButton = getByRole('button');
-    const searchTerm = getByTestId('searchTerm');
-    const populationMin = getByTestId('populationMin');
-    const populationMax = getByTestId('populationMax');
+    const searchButton = getByText('Hae');
+    const searchTerm = getByPlaceholderText('Hakutermi');
+    const populationMin = getByPlaceholderText('Vähintään');
+    const populationMax = getByPlaceholderText('Enintään');
     const textValue = 'test';
     const numericValue = formatPopulation(1000);
 
     fireEvent.change(searchTerm, { target: { value: textValue } });
     fireEvent.change(populationMin, { target: { value: numericValue } });
     fireEvent.change(populationMax, { target: { value: numericValue } });
-    fireEvent.change(getByRole('listbox'), { target: { value: selectedCountry } });
+    fireEvent.change(getByTestId('countrySelector'), { target: { value: selectedCountry } });
     fireEvent.click(searchButton);
 
     const searchResult = {
