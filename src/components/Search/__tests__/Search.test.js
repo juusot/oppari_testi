@@ -1,7 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Search, { defaultState as defaultSearchResult, formatPopulation } from '../Search';
+import Search, {
+  defaultState as defaultSearchResult,
+  formatPopulation,
+} from '../Search';
 
 const countries = ['Suomi', 'Ruotsi'];
 const onSearch = jest.fn();
@@ -24,8 +27,18 @@ describe('Search-komponentti', () => {
 
   test.each([
     ['hakutermillä', 'searchTerm', 'Hakutermi', 'test'],
-    ['vähimmäisväkiluvulla', 'populationMin', 'Vähintään', formatPopulation(1000)],
-    ['enimmäisväkiluvulla', 'populationMax', 'Enintään', formatPopulation(1000)],
+    [
+      'vähimmäisväkiluvulla',
+      'populationMin',
+      'Vähintään',
+      formatPopulation(1000),
+    ],
+    [
+      'enimmäisväkiluvulla',
+      'populationMax',
+      'Enintään',
+      formatPopulation(1000),
+    ],
   ])('hakee annetulla %s', (label, key, placeholder, input) => {
     const { getByPlaceholderText, getByText } = render(<Search {...props} />);
 
@@ -47,7 +60,9 @@ describe('Search-komponentti', () => {
     const { getByTestId, getByText } = render(<Search {...props} />);
 
     const selectedCountry = countries[0];
-    fireEvent.change(getByTestId('countrySelector'), { target: { value: selectedCountry } });
+    fireEvent.change(getByTestId('countrySelector'), {
+      target: { value: selectedCountry },
+    });
     const searchButton = getByText('Hae');
     fireEvent.click(searchButton);
 
@@ -59,8 +74,20 @@ describe('Search-komponentti', () => {
     expect(onSearch).toHaveBeenCalledWith(searchResult);
   });
 
+  test('näyttää kaikki komponentin vastaanottamat maat', () => {
+    const { getByText } = render(<Search {...props} />);
+
+    const selectedCountry1 = getByText(countries[0]);
+    const selectedCountry2 = getByText(countries[1]);
+
+    expect(selectedCountry1).toBeInTheDocument();
+    expect(selectedCountry2).toBeInTheDocument();
+  });
+
   test('hakee kaikilla annetuilla yhtaikaa arvoilla', () => {
-    const { getByTestId, getByText, getByPlaceholderText } = render(<Search {...props} />);
+    const { getByTestId, getByText, getByPlaceholderText } = render(
+      <Search {...props} />
+    );
 
     const selectedCountry = countries[1];
     const searchButton = getByText('Hae');
@@ -73,7 +100,9 @@ describe('Search-komponentti', () => {
     fireEvent.change(searchTerm, { target: { value: textValue } });
     fireEvent.change(populationMin, { target: { value: numericValue } });
     fireEvent.change(populationMax, { target: { value: numericValue } });
-    fireEvent.change(getByTestId('countrySelector'), { target: { value: selectedCountry } });
+    fireEvent.change(getByTestId('countrySelector'), {
+      target: { value: selectedCountry },
+    });
     fireEvent.click(searchButton);
 
     const searchResult = {

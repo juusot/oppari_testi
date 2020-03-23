@@ -26,7 +26,9 @@ describe('City-komponentti', () => {
     const { getByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
-    const population = getByText(formatPopulation(props.population), { exact: false });
+    const population = getByText(formatPopulation(props.population), {
+      exact: false,
+    });
     expect(population).toBeInTheDocument();
   });
 
@@ -34,11 +36,15 @@ describe('City-komponentti', () => {
     const { getByText, queryByText } = render(<City {...props} />);
     const city = getByText(props.city, { exact: false });
     fireEvent.click(city);
-    const population = getByText(formatPopulation(props.population), { exact: false });
+    const population = getByText(formatPopulation(props.population), {
+      exact: false,
+    });
     expect(population).toBeInTheDocument();
 
     fireEvent.click(city);
-    const populationHidden = queryByText(formatPopulation(props.population), { exact: false });
+    const populationHidden = queryByText(formatPopulation(props.population), {
+      exact: false,
+    });
     expect(populationHidden).toBeNull();
   });
 
@@ -47,17 +53,23 @@ describe('City-komponentti', () => {
     const city = getByText(props.city, { exact: false });
     // Näkyviin
     fireEvent.click(city);
-    const population = getByText(formatPopulation(props.population), { exact: false });
+    const population = getByText(formatPopulation(props.population), {
+      exact: false,
+    });
     expect(population).toBeInTheDocument();
 
     // Piiloon
     fireEvent.click(city);
-    const populationHidden = queryByText(formatPopulation(props.population), { exact: false });
+    const populationHidden = queryByText(formatPopulation(props.population), {
+      exact: false,
+    });
     expect(populationHidden).toBeNull();
 
     // Näkyviin
     fireEvent.click(city);
-    const populationVisible = getByText(formatPopulation(props.population), { exact: false });
+    const populationVisible = getByText(formatPopulation(props.population), {
+      exact: false,
+    });
     expect(populationVisible).toBeInTheDocument();
     expect(population).toStrictEqual(populationVisible);
   });

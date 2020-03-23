@@ -9,7 +9,8 @@ export const defaultState = {
   searchTerm: '',
 };
 
-export const formatPopulation = population => Number(population).toLocaleString('fi-FI');
+export const formatPopulation = population =>
+  Number(population).toLocaleString('fi-FI');
 
 export default class Search extends React.Component {
   constructor() {
@@ -17,19 +18,14 @@ export default class Search extends React.Component {
     this.state = defaultState;
   }
 
-  handleOnChange(key) {
-    return event => {
-      const value =
-        ['populationMin', 'populationMax'].includes(key) && event.target.value
-          ? formatPopulation(event.target.value.replace(/[^0-9]+/g, ''))
-          : event.target.value;
-
-      this.setState({ [key]: value });
-    };
-  }
-
   render() {
-    const { searchTerm, selectedCountry, populationMin, populationMax } = this.state;
+    const { countries, onSearch } = this.props;
+    const {
+      searchTerm,
+      selectedCountry,
+      populationMin,
+      populationMax,
+    } = this.state;
 
     return (
       <div className="search">
@@ -39,14 +35,16 @@ export default class Search extends React.Component {
             data-testid="searchTerm"
             placeholder="Hakutermi"
             type="text"
-            onChange={this.handleOnChange('searchTerm')}
+            onChange={event =>
+              this.setState({ searchTerm: event.target.value })
+            }
             defaultValue={searchTerm}
           />
           <button
             data-testid="searchButton"
             className="searchButton"
             type="button"
-            onClick={() => this.props.onSearch(this.state)}
+            onClick={() => onSearch(this.state)}
           >
             Hae
           </button>
@@ -56,13 +54,15 @@ export default class Search extends React.Component {
           <select
             data-testid="countrySelector"
             className="countrySelector"
-            onChange={this.handleOnChange('selectedCountry')}
+            onChange={event =>
+              this.setState({ selectedCountry: event.target.value })
+            }
             defaultValue={selectedCountry}
           >
             <option key="default" value="">
               Valitse maa
             </option>
-            {this.props.countries.map(country => (
+            {countries.map(country => (
               <option key={country} value={country}>
                 {country}
               </option>
@@ -76,7 +76,13 @@ export default class Search extends React.Component {
             data-testid="populationMin"
             placeholder="Vähintään"
             type="text"
-            onChange={this.handleOnChange('populationMin')}
+            onChange={event =>
+              this.setState({
+                populationMin: formatPopulation(
+                  event.target.value.replace(/[^0-9]+/g, '')
+                ),
+              })
+            }
             value={populationMin}
           />
           <input
@@ -84,7 +90,13 @@ export default class Search extends React.Component {
             data-testid="populationMax"
             placeholder="Enintään"
             type="text"
-            onChange={this.handleOnChange('populationMax')}
+            onChange={event =>
+              this.setState({
+                populationMax: formatPopulation(
+                  event.target.value.replace(/[^0-9]+/g, '')
+                ),
+              })
+            }
             value={populationMax}
           />
         </div>

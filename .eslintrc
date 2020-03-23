@@ -27,7 +27,6 @@
     "prettier/prettier": [
       "error",
       {
-        "printWidth": 120,
         "trailingComma": "es5",
         "singleQuote": true,
         "proseWrap": "always",
